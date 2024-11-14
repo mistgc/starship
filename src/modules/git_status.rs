@@ -33,6 +33,13 @@ pub fn module<'a>(context: &'a Context) -> Option<Module<'a>> {
 
     // Return None if not in git repository
     let repo = context.get_repo().ok()?;
+    let git_repo = repo.open();
+    let git_head = git_repo.head().ok()?;
+
+    let is_detached = git_head.is_detached();
+    if config.disable_on_detached && is_detached {
+        return None;
+    }
 
     if repo.kind.is_bare() {
         log::debug!("This is a bare repository, git_status is not applicable");

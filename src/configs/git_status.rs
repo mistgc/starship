@@ -24,6 +24,7 @@ pub struct GitStatusConfig<'a> {
     pub typechanged: &'a str,
     pub ignore_submodules: bool,
     pub disabled: bool,
+    pub disable_on_detached: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub windows_starship: Option<&'a str>,
 }
@@ -47,6 +48,7 @@ impl<'a> Default for GitStatusConfig<'a> {
             typechanged: "",
             ignore_submodules: false,
             disabled: false,
+            disable_on_detached: true,
             windows_starship: None,
         }
     }
